@@ -11,7 +11,6 @@ public class ConsumerService {
     private ProducerRemote producerRemote;
 
     public String consumer(){
-
         return producerRemote.producer();
     }
 

@@ -1,13 +1,26 @@
+server:
+  port: 9090  
 spring:
   application:
-    name: spring-cloud-consul-consumer  #消费者名称
+    name: spring-cloud-gateway  
   cloud:
     consul:
-      host: 127.0.0.1   #consul注册节点IP
-      port: 8500         #consul注册节点端口
+      host: 127.0.0.1   
+      port: 8500       
       discovery:
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}  #实例ID
-        health-check-path: /actuator/health                                                       #健康检查
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port} 
+        health-check-path: /actuator/health                                                     
         health-check-interval: 10s
-server:
-  port: 9092   #消费者服务端口
+    #外部通过地址http://localhost:9090/consumer/**访问网管，由网管通过如下路由配置转发至相应的后端服务
+    gateway:
+      routes:
+        - id: host_route
+          uri: http://localhost:9092 #服务host
+          predicates:
+            - Path=/consumer/** # 请求地址携带consumer，转发到consumer服务
+            
+        - id: host_route
+          uri: http://localhost:9091 #服务host
+          predicates:
+            - Path=/producer/** # 请求地址携带producer，转发到producer服务
+

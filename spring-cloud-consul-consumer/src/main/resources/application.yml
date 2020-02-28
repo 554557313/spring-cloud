@@ -1,13 +1,63 @@
+server:
+  port: 9092
 spring:
   application:
-    name: spring-cloud-consul-consumer  #消费者名称
+    name: spring-cloud-consul-consumer
   cloud:
     consul:
-      host: 127.0.0.1   #consul注册节点IP
-      port: 8500         #consul注册节点端口
+      host: 127.0.0.1 
+      port: 8500        
       discovery:
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}  #实例ID
-        health-check-path: /actuator/health                                                       #健康检查
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}  
+        health-check-path: /actuator/health                                                      
         health-check-interval: 10s
-server:
-  port: 9092   #消费者服务端口
+#redis集群
+  redis:
+     cluster:
+       nodes: 192.168.111.135:9001,192.168.111.135:9002,192.168.111.135:9003,192.168.111.135:9004,192.168.111.135:9005,192.168.111.135:9006
+     database: 0
+     jedis: 
+       pool:
+         max-active: 300
+         max-wait: 3s
+         max-idle: 100
+         min-idle: 20
+     timeout: 60000
+  #mycat或mysql数据源
+  datasource:
+        name: test
+        #连接mycat
+        #url: jdbc:mysql://192.168.111.135:8066/TESTDB
+        #连接mysql
+        url: jdbc:mysql://192.168.111.134:3306/db1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        #连接mycat的密码
+        #password: 123456 
+        password: Passwd123!
+        driver-class-name: com.mysql.jdbc.Driver
+       
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #mapper映射xml文件的所在路径
+  type-aliases-package: com.woasis.consulconsumer.model  # 对应实体类的路径
+  
+# 开启feign支持hystrix，默认关闭
+feign:
+  hystrix:
+    enabled: true 
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+      isolation:
+        thread:
+          #目前有两个容器实例，单个请求超时5s,+重试>10s，超15s则熔断
+          timeoutInMilliseconds: 15000
+
+ribbon:
+  #ribbon请求连接的超时时间- 限制3秒内必须请求到服务，并不限制服务处理的返回时间
+  connectTimeout: 3000
+  #请求处理的超时时间 下级服务响应最大时间,超出时间消费方（路由也是消费方）返回timeout,超时时间不可大于断路器的超时时间
+  readTimeout: 5000
+  
