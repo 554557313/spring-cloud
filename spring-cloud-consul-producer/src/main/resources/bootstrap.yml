@@ -1,0 +1,22 @@
+#本应用采用远程配置服务管理配置文件
+
+spring:
+  application:
+    name: ghw  #应用名称，对应远程配置文件名 {application}-{profile}-{label}=ghw-dev.properties
+  cloud:
+    #config: 
+     # profile: dev  #远程配置的profile
+      #label: master #远程配置仓库分支
+      #uri: http://127.0.0.1:8081/#远程配置服务地址
+    consul:
+      host: 127.0.0.1 
+      port: 8500      
+      discovery:
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        health-check-path: /actuator/health                                                   
+        health-check-interval: 10s
+
+server:
+  port: 9091 
+  
+
