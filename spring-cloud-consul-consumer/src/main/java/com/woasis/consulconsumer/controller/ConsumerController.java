@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * 消费者
- */
 @Controller
 @RequestMapping("/consumer")
 public class ConsumerController {

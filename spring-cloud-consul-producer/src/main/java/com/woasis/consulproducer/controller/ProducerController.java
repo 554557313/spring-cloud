@@ -27,7 +27,8 @@ public class ProducerController {
     @GetMapping("/get")
     @ResponseBody
     public String producer(){
-        System.out.println("I'm producer");
+    	//throw new RuntimeException();
+        //System.out.println("I'm producer 2");
         return "Hello, I'm producer,";
     }
     

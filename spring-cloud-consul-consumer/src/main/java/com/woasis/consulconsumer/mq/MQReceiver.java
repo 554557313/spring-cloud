@@ -39,6 +39,7 @@ public class MQReceiver {
 			System.out.println("receive--1: " + new String(message.getBody()));
 		} catch (Exception e) {
 			e.printStackTrace();
+			//异常，nack，消息不删除
 			channel.basicNack(deliveryTag, false, true);
 		}
     }
