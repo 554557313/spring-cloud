@@ -1,7 +1,5 @@
 package com.woasis.consulconsumer;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
