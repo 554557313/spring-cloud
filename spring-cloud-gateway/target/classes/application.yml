@@ -15,12 +15,22 @@ spring:
     gateway:
       routes:
         - id: host_route
-          uri: http://localhost:9092 #服务host
+          uri: http://localhost:9092 
           predicates:
             - Path=/consumer/** # 请求地址携带consumer，转发到consumer服务
             
         - id: host_route
-          uri: http://localhost:9091 #服务host
+          uri: http://localhost:9091 
           predicates:
             - Path=/producer/** # 请求地址携带producer，转发到producer服务
+          filters:
+          - name: RequestRateLimiter
+            args:
+              key-resolver: '#{@hostAddrKeyResolver}' #限流bean
+              redis-rate-limiter.replenishRate: 1 #单位时间内生成token的速率
+              redis-rate-limiter.burstCapacity: 3 #令牌桶容量
+redis:
+    host: 192.168.111.135:9001
+    port: 6379
+    database: 0
 

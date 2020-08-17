@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class ConsulConsumerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsulConsumerApplication.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(ConsulConsumerApplication.class, args);
+        Object bean = run.getBean("ConsumerService");
     }
 }
