@@ -1,7 +1,7 @@
 /doc/
-target
+/target/
 /.idea/
 /offer.iml
 /.project
 /.settings
-log/*
+*.log

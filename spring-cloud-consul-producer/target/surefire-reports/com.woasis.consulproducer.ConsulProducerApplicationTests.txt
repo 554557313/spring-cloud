@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.woasis.consulproducer.ConsulProducerApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.539 s - in com.woasis.consulproducer.ConsulProducerApplicationTests
